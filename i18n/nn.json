@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jon Harald Søby"
+		]
+	},
+	"userjs-rcp-portlet-title": "Upatruljerte",
+	"userjs-rcp-portlet-empty": "Det er ikkje fleire upatruljerte endringar. Godt jobba! 🥳",
+	"userjs-rcp-options": "Alternativ",
+	"userjs-rcp-options-origin": "Kor skal me hente upatruljerte endringar frå?",
+	"userjs-rcp-options-origin-rc": "Siste endringar",
+	"userjs-rcp-options-origin-wl": "Overvakingslista mi",
+	"userjs-rcp-options-quantity": "Kor mange upatruljerte endringar skal me visa?",
+	"userjs-rcp-options-quantity-between": "Må vere mellom 1 og 20.",
+	"userjs-rcp-options-frequency": "Kor hyppig, i antall sekund, skal lista over endringar verte oppdatert?",
+	"userjs-rcp-options-frequency-between": "Kan ikkje vere lågare enn 30 sekund.",
+	"userjs-rcp-options-newonly": "Berre syn nye sider",
+	"userjs-rcp-options-namespace": "Kva for namnerom skal endringar hentast frå?",
+	"userjs-rcp-options-namespace-content": "Innhaldsnamnerom",
+	"userjs-rcp-options-namespace-noncontent": "Ikkje innhaldsnamnerom",
+	"userjs-rcp-options-namespace-all": "Alle namnerom",
+	"userjs-rcp-options-direction": "Kva for rekkjefylgd skal endringane visast i?",
+	"userjs-rcp-options-direction-oldest": "Eldste fyrst",
+	"userjs-rcp-options-direction-newest": "Nyaste fyrst",
+	"userjs-rcp-dialog-save": "Lagra",
+	"userjs-rcp-dialog-reset": "Nullstill innstillingane",
+	"userjs-rcp-dialog-cancel": "Avbryt",
+	"userjs-rcp-error": "Feil"
+}

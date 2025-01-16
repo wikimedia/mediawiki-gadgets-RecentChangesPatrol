@@ -1,0 +1,31 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jon Harald Søby"
+		]
+	},
+	"userjs-rcp-portlet-title": "Header used for the portlet showing the changes.",
+	"userjs-rcp-portlet-empty": "Message shown if there are no unpatrolled changes to show to the user.",
+	"userjs-rcp-options": "Header for the options dialog.",
+	"userjs-rcp-options-origin": "Label for a selector for where to get unpatrolled changes from (recent changes or watchlist).",
+	"userjs-rcp-options-origin-rc": "Label for a selector.",
+	"userjs-rcp-options-origin-wl": "Label for a selector.",
+	"userjs-rcp-options-quantity": "Label for an input field for how many unpatrolled changes should be shown in the sidebar.",
+	"userjs-rcp-options-quantity-between": "Help text for the input of how many unpatrolled changes to get.",
+	"userjs-rcp-options-frequency": "Label for an input filed for how often the list of changes should refresh.",
+	"userjs-rcp-options-frequency-between": "Help text for the input of how often the list should refresh.",
+	"userjs-rcp-options-newonly": "Label for a checkbox for whether or not to only show new pages.",
+	"userjs-rcp-options-namespace": "Label for a selector for what type of namespaces should be included in the list of unpatrolled changes.",
+	"userjs-rcp-options-namespace-content": "Label for a selector to select content namespaces. What counts as a \"content namespace\" can vary by wiki; in Wikipedias it is typically articles and some times portals; in Wiktionaries, it is normally entries and appendices.",
+	"userjs-rcp-options-namespace-noncontent": "Label for a selector to select non-content namespaces. This means all namespaces except \"content namespaces\".",
+	"userjs-rcp-options-namespace-all": "Label for a selector to show unpatrolled changes from all namespaces.",
+	"userjs-rcp-options-direction": "Label for a selector abotu which direction to show unpatrolled changes in (i.e. newest first or oldest first).",
+	"userjs-rcp-options-direction-oldest": "Label for a button to select to show oldest changes first.",
+	"userjs-rcp-options-direction-newest": "Label for a button to select to show newest changes first.",
+	"userjs-rcp-dialog-save": "Label for save button.",
+	"userjs-rcp-dialog-reset": "Label for button to reset preferences to default preferences.",
+	"userjs-rcp-dialog-cancel": "Label for cancel button (to close the options dialog)",
+	"userjs-rcp-error": "Generic message prepended in front of an error message from the API.",
+	"userjs-rcp-indicator-new": "{{optional}}\nLetter/symbol shown in front of pages that are newly created. Should probably be the same as {{msg-mw|newpageletter}}.",
+	"userjs-rcp-indicator-highlight": "{{optional}}\nLetter/symbol shown in front of changes that have suspicious tags (as defined in the configuration). Should probably be the same as {{msg-mw|unpatrolledletter}}."
+}

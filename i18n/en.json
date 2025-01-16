@@ -1,0 +1,31 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jon Harald Søby"
+		]
+	},
+	"userjs-rcp-portlet-title": "Unpatrolled",
+	"userjs-rcp-portlet-empty": "There are no more unpatrolled changes to show. Good job! 🥳",
+	"userjs-rcp-options": "Options",
+	"userjs-rcp-options-origin": "From where should we get unpatrolled changes?",
+	"userjs-rcp-options-origin-rc": "Recent changes",
+	"userjs-rcp-options-origin-wl": "My watchlist",
+	"userjs-rcp-options-quantity": "How many unpatrolled changes should be shown?",
+	"userjs-rcp-options-quantity-between": "Must be between 1 and 20.",
+	"userjs-rcp-options-frequency": "How often, in number of seconds, should the list of changes be updated?",
+	"userjs-rcp-options-frequency-between": "This can't be lower than 30 seconds.",
+	"userjs-rcp-options-newonly": "Show only new pages",
+	"userjs-rcp-options-namespace": "Which namespaces should be included?",
+	"userjs-rcp-options-namespace-content": "Content namespaces",
+	"userjs-rcp-options-namespace-noncontent": "Non-content namespaces",
+	"userjs-rcp-options-namespace-all": "All namespaces",
+	"userjs-rcp-options-direction": "Which direction should changes be listed?",
+	"userjs-rcp-options-direction-oldest": "Oldest first",
+	"userjs-rcp-options-direction-newest": "Newest first",
+	"userjs-rcp-dialog-save": "Save",
+	"userjs-rcp-dialog-reset": "Reset preferences",
+	"userjs-rcp-dialog-cancel": "Cancel",
+	"userjs-rcp-error": "Error",
+	"userjs-rcp-indicator-new": "N",
+	"userjs-rcp-indicator-highlight": "!"
+}

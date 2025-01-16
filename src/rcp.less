@@ -1,0 +1,113 @@
+.userjs-rcp-item {
+	a {
+		display: block !important;
+		border-radius: var(--border-radius-base, 2px);
+
+		body.skin-monobook &:hover,
+		body.skin-vector &:hover {
+			text-decoration: none;
+
+			.userjs-rcp-item-title {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	&.userjs-rcp-item-highlight a {
+		background-color: var(--background-color-content-removed, #ffe49c);
+	}
+
+	.userjs-rcp-item-title {
+		hyphens: auto;
+	}
+
+	.userjs-rcp-timestamp {
+		color: var(--color-subtle, #54595d);
+		font-size: var(--font-size-x-small, x-small);
+		display: block;
+	}
+}
+
+.userjs-rcp-item-title {
+	&::before,
+	&::after {
+		display: inline-block;
+		font-size: smaller;
+	}
+
+	&::after {
+		content: "\00a0(" attr(data-rcp-diffsize) ")";
+		color: var(--color-disabled, #a2a9b1);
+
+		.userjs-rcp-diff-large & {
+			font-weight: bold;
+		}
+
+		.userjs-rcp-diff-positive & {
+			color: var(--color-content-added, #006400);
+		}
+
+		.userjs-rcp-diff-negative & {
+			color: var(--color-content-removed, #8b0000);
+		}
+	}
+
+	&::before {
+		.userjs-rcp-item-new & {
+			content: attr(data-rcp-indicator-new);
+			font-weight: bold;
+			margin-inline-end: 0.5em;
+			color: var(--color-base, #202122);
+		}
+
+		.userjs-rcp-item-highlight & {
+			content: attr(data-rcp-indicator-highlight);
+			display: inline-block;
+			font-size: smaller;
+			font-weight: bold;
+			margin-inline: 0.25em;
+			padding: 0 0.25em;
+			vertical-align: middle;
+			color: var(--background-color-content-removed, #ffe49c);
+			background-color: var(--color-destructive, #bf3c2c);
+			border-radius: var(--border-radius-base, 2px);
+		}
+	}
+}
+
+.userjs-rcp-options-button {
+	background: transparent url('/w/extensions/UniversalLanguageSelector/resources/images/cog-sprite.svg') no-repeat center top;
+	border: 0;
+	min-height: 16px;
+	min-width: 16px;
+	cursor: pointer;
+	float: right;
+
+	&:hover {
+		background-position: center -16px;
+	}
+
+	body.skin-vector &,
+	body.skin-vector-2022 & {
+		margin-block-start: 8px;
+	}
+}
+
+#p-navigation .vector-menu-heading {
+	display: flex !important;
+}
+
+#p-unpatrolled {
+	&,
+	&-label {
+		display: block !important;
+	}
+
+	.minerva-icon {
+		display: none;
+	}
+}
+
+#n-userjs-rcp-emptylist {
+	cursor: default;
+}

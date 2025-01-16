@@ -1,0 +1,18 @@
+{
+	"dangerousTags": [
+		"emoji",
+		"mw-blank",
+		"mw-changed-redirect-target",
+		"mw-manual-revert",
+		"mw-replace",
+		"mw-undo"
+	],
+	"defaultPrefs": {
+		"origin": "recentchanges",
+		"quantity": 10,
+		"frequency": 60,
+		"newOnly": false,
+		"namespace": "all",
+		"direction": "older"
+	}
+}
