@@ -1,7 +1,12 @@
 .userjs-rcp-item {
+	.userjs-rcp-item-title {
+		hyphens: auto;
+	}
+
 	a {
+		// stylelint-disable-next-line declaration-no-important
 		display: block !important;
-		border-radius: var(--border-radius-base, 2px);
+		border-radius: var( --border-radius-base, 2px );
 
 		body.skin-monobook &:hover,
 		body.skin-vector &:hover {
@@ -13,17 +18,14 @@
 		}
 	}
 
+	// stylelint-disable-next-line no-descending-specificity
 	&.userjs-rcp-item-highlight a {
-		background-color: var(--background-color-content-removed, #ffe49c);
-	}
-
-	.userjs-rcp-item-title {
-		hyphens: auto;
+		background-color: var( --background-color-content-removed, #ffe49c );
 	}
 
 	.userjs-rcp-timestamp {
-		color: var(--color-subtle, #54595d);
-		font-size: var(--font-size-x-small, x-small);
+		color: var( --color-subtle, #54595d );
+		font-size: var( --font-size-x-small, x-small );
 		display: block;
 	}
 }
@@ -36,47 +38,47 @@
 	}
 
 	&::after {
-		content: "\00a0(" attr(data-rcp-diffsize) ")";
-		color: var(--color-disabled, #a2a9b1);
+		content: '\00a0(' attr( data-rcp-diffsize ) ')';
+		color: var( --color-disabled, #a2a9b1 );
 
 		.userjs-rcp-diff-large & {
 			font-weight: bold;
 		}
 
 		.userjs-rcp-diff-positive & {
-			color: var(--color-content-added, #006400);
+			color: var( --color-content-added, #006400 );
 		}
 
 		.userjs-rcp-diff-negative & {
-			color: var(--color-content-removed, #8b0000);
+			color: var( --color-content-removed, #8b0000 );
 		}
 	}
 
 	&::before {
 		.userjs-rcp-item-new & {
-			content: attr(data-rcp-indicator-new);
+			content: attr( data-rcp-indicator-new );
 			font-weight: bold;
 			margin-inline-end: 0.5em;
-			color: var(--color-base, #202122);
+			color: var( --color-base, #202122 );
 		}
 
 		.userjs-rcp-item-highlight & {
-			content: attr(data-rcp-indicator-highlight);
+			content: attr( data-rcp-indicator-highlight );
 			display: inline-block;
 			font-size: smaller;
 			font-weight: bold;
 			margin-inline: 0.25em;
 			padding: 0 0.25em;
 			vertical-align: middle;
-			color: var(--background-color-content-removed, #ffe49c);
-			background-color: var(--color-destructive, #bf3c2c);
-			border-radius: var(--border-radius-base, 2px);
+			color: var( --background-color-content-removed, #ffe49c );
+			background-color: var( --color-destructive, #bf3c2c );
+			border-radius: var( --border-radius-base, 2px );
 		}
 	}
 }
 
 .userjs-rcp-options-button {
-	background: transparent url('/w/extensions/UniversalLanguageSelector/resources/images/cog-sprite.svg') no-repeat center top;
+	background: transparent url( /w/extensions/UniversalLanguageSelector/resources/images/cog-sprite.svg ) no-repeat center top;
 	border: 0;
 	min-height: 16px;
 	min-width: 16px;
@@ -93,6 +95,8 @@
 	}
 }
 
+// stylelint-disable selector-max-id, declaration-no-important
+
 #p-navigation .vector-menu-heading {
 	display: flex !important;
 }
@@ -100,6 +104,7 @@
 #p-unpatrolled {
 	&,
 	&-label {
+		// stylelint-disable-next-line
 		display: block !important;
 	}
 
@@ -111,3 +116,5 @@
 #n-userjs-rcp-emptylist {
 	cursor: default;
 }
+
+// stylelint-enable selector-max-id, declaration-no-important

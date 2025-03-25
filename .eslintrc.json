@@ -1,0 +1,20 @@
+{
+	"extends": [
+		"wikimedia/client/es2016",
+		"wikimedia/mediawiki"
+	],
+	"env": {
+		"browser": true
+	},
+	"globals": {
+		"moment": "readonly",
+		"mw": "readonly",
+		"OO": "readonly",
+		"$": "readonly"
+	},
+	"rules": {
+		"no-implicit-globals": "off",
+		"no-prototype-builtins": "off",
+		"space-before-function-paren": "off"
+	}
+}

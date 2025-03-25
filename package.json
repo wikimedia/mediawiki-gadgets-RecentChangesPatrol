@@ -1,0 +1,26 @@
+{
+  "name": "recentchangespatrol",
+  "version": "2.2.1",
+  "description": "Gadget that adds unpatrolled changes to the sidebar for quick access",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "lessc src/rcp.less src/rcp.css --plugin=@wikimedia/less-plugin-clean-css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://jhsoby@gerrit.wikimedia.org:29418/mediawiki/gadgets/RecentChangesPatrol"
+  },
+  "keywords": [],
+  "author": "Jon Harald Søby <jhsoby@gmail.com>",
+  "license": "MIT",
+  "type": "commonjs",
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-config-wikimedia": "^0.29.1",
+    "less": "^4.2.2",
+    "less-plugin-clean-css": "^1.6.0",
+    "stylelint": "^16.15.0",
+    "stylelint-config-wikimedia": "^0.18.0"
+  }
+}

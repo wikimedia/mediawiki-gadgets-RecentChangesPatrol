@@ -7,19 +7,19 @@
  * adapted locally by users Laaknor, Jeblad, Flums and EivindJ.
  *
  * @author Jon Harald Søby
- * @version 2.2.1 (2024-12-27)
+ * @version 2.2.2 (2025-03-11)
  */
 
 const api = new mw.Api();
 let intervalId;
 let lastCheckedTime = 0;
 
-const messages = function() {
-	let translations = require( './rcp-i18n.json' ),
+( () => {
+	const translations = require( './rcp-i18n.json' ),
 		chain = mw.language.getFallbackLanguageChain(),
 		len = chain.length,
-		ret = {},
-		i = len - 1;
+		ret = {};
+	let i = len - 1;
 	while ( i >= 0 ) {
 		if ( translations.hasOwnProperty( chain[ i ] ) ) {
 			Object.assign( ret, translations[ chain[ i ] ] );
@@ -27,31 +27,31 @@ const messages = function() {
 		i = i - 1;
 	}
 	mw.messages.set( ret );
-}();
+} )();
 
 /**
  * Get the configuration for this wiki.
  *
- * @returns {object}
+ * @return {Object}
  */
 function getConf() {
 	const defaultConf = {
-		'dangerousTags': [
+		dangerousTags: [
 			'mw-blank',
 			'mw-changed-redirect-target',
 			'mw-manual-revert',
 			'mw-replace',
 			'mw-undo'
 		],
-		'defaultPrefs': {
-			'origin': 'recentchanges',
-			'quantity': 10,
-			'frequency': 60,
-			'newOnly': false,
-			'namespace': 'all',
-			'direction': 'older'
+		defaultPrefs: {
+			origin: 'recentchanges',
+			quantity: 10,
+			frequency: 60,
+			newOnly: false,
+			namespace: 'all',
+			direction: 'older'
 		}
-	}
+	};
 	const conf = require( './rcp-config.json' ) || {};
 	Object.assign( defaultConf, conf );
 	return defaultConf;
@@ -61,28 +61,24 @@ function getConf() {
  * Get the user's preferences
  *
  * @param {Object} newPrefs
- * @returns {Object}
+ * @return {Object}
  */
 function getPreferences( newPrefs = {} ) {
-	let prefs = {};
+	const prefs = {};
 
 	const userPrefs = JSON.parse( mw.user.options.get( 'userjs-rcp' ) ) || {};
 
-	/* No ES2018 in gadgets :-(
-	return {
-		...defaultPrefs,
-		...userPrefs,
-		...newPrefs
-	}*/
 	Object.assign( prefs, getConf().defaultPrefs );
 	Object.assign( prefs, userPrefs );
 	Object.assign( prefs, newPrefs );
 	return prefs;
 }
 
-/** Set the user's preferences
+/**
+ * Set the user's preferences
  *
- * @param {Object} prefs
+ * @param {Object} options
+ * @return {Object} mw.Api
  */
 function setPreferences( options ) {
 	mw.user.options.set( 'userjs-rcp', JSON.stringify( options ) );
@@ -100,7 +96,7 @@ function setPreferences( options ) {
  * Return the list type we want and its API prefix.
  *
  * @param {string} origin
- * @returns {Object}
+ * @return {Object}
  */
 function getApiListType( origin ) {
 	if ( origin === 'watchlist' ) {
@@ -120,7 +116,7 @@ function getApiListType( origin ) {
  * Return an API request for unpatrolled changes.
  *
  * @param {Object} prefs
- * @returns {Object}
+ * @return {Object}
  */
 function getUnpatrolled( prefs ) {
 	const listType = getApiListType( prefs.origin ),
@@ -138,17 +134,20 @@ function getUnpatrolled( prefs ) {
 		[ listType.prefix + 'limit' ]: prefs.quantity,
 		maxage: prefs.frequency,
 		smaxage: prefs.frequency
-	}
+	};
 
-	let contentNamespaces = mw.config.get( 'wgContentNamespaces' );
+	const contentNamespaces = mw.config.get( 'wgContentNamespaces' );
 
 	if ( prefs.namespace === 'content' ) {
 		request[ listType.prefix + 'namespace' ] = contentNamespaces;
 	} else if ( prefs.namespace === 'noncontent' ) {
-		let allNamespaces = Object.values( mw.config.get( 'wgNamespaceIds' ) );
+		let allNamespaces = Object.keys( mw.config.get( 'wgNamespaceIds' ) )
+			.map( ( ns ) => mw.config.get( 'wgNamespaceIds' )[ ns ] );
 		allNamespaces = [ ...new Set( allNamespaces ) ];
 
-		let nonContentNamespaces = allNamespaces.filter( ns => !contentNamespaces.includes( ns ) );
+		const nonContentNamespaces = allNamespaces.filter(
+			( ns ) => !contentNamespaces.includes( ns )
+		);
 		request[ listType.prefix + 'namespace' ] = nonContentNamespaces;
 	}
 
@@ -190,11 +189,11 @@ function createPortletEntry( data ) {
 		classesToAdd.push( 'userjs-rcp-diff-large' );
 	}
 
-	let $itemTitle = $( '<span>' )
+	const $itemTitle = $( '<span>' )
 		.addClass( 'userjs-rcp-item-title' )
 		.attr( 'data-rcp-diffsize', sizeDiff )
 		.text( data.title );
-	let $timestamp = $( '<span>' )
+	const $timestamp = $( '<span>' )
 		.addClass( 'userjs-rcp-timestamp' )
 		.text( '(' + moment( data.timestamp ).fromNow() + ')' );
 
@@ -211,7 +210,7 @@ function createPortletEntry( data ) {
 		);
 	}
 
-	if ( getConf().dangerousTags.filter( tag => data.tags.includes( tag ) ).length ) {
+	if ( getConf().dangerousTags.filter( ( tag ) => data.tags.includes( tag ) ).length ) {
 		classesToAdd.push( 'userjs-rcp-item-highlight' );
 		$itemTitle.attr(
 			'data-rcp-indicator-highlight',
@@ -219,6 +218,7 @@ function createPortletEntry( data ) {
 		);
 	}
 
+	// eslint-disable-next-line mediawiki/class-doc
 	$( portletLink )
 		.addClass( classesToAdd.join( ' ' ) );
 
@@ -226,13 +226,13 @@ function createPortletEntry( data ) {
 		$( portletLink )
 			.addClass( 'toggle-list-item ' )
 			.find( 'a' )
-				.addClass( 'toggle-list-item__anchor' )
-				.attr( 'title', moment( data.timestamp ).fromNow() )
-				.find( 'span' )
-					.addClass( 'toggle-list-item__label' );
+			.addClass( 'toggle-list-item__anchor' )
+			.attr( 'title', moment( data.timestamp ).fromNow() )
+			.find( 'span' )
+			.addClass( 'toggle-list-item__label' );
 		$( portletLink )
 			.closest( 'ul' )
-				.addClass( 'toggle-list__list' );
+			.addClass( 'toggle-list__list' );
 	} else {
 		$( portletLink ).find( 'a' ).append( $timestamp );
 	}
@@ -245,14 +245,18 @@ function createPortletEntry( data ) {
  * @param {boolean} initial First time to populate the list?
  */
 function populateList( initial = false ) {
-	if ( document.hidden ) return;
+	if ( document.hidden ) {
+		return;
+	}
 
 	const prefs = getPreferences();
 
 	const $list = $( '#p-unpatrolled ul' );
-	if ( !initial ) $list.addClass( 'oo-ui-pendingElement-pending' );
+	if ( !initial ) {
+		$list.addClass( 'oo-ui-pendingElement-pending' );
+	}
 
-	getUnpatrolled( prefs ).done( function( data ) {
+	getUnpatrolled( prefs ).done( ( data ) => {
 		if ( !initial ) {
 			$list.empty();
 			$list.removeClass( 'oo-ui-pendingElement-pending' );
@@ -262,7 +266,7 @@ function populateList( initial = false ) {
 			changeList = data.query[ changeListType ];
 
 		if ( changeList.length === 0 ) {
-			let fakePortletLink = mw.util.addPortletLink(
+			const fakePortletLink = mw.util.addPortletLink(
 				'p-unpatrolled',
 				'#',
 				mw.msg( 'userjs-rcp-portlet-empty' ),
@@ -277,11 +281,11 @@ function populateList( initial = false ) {
 			return;
 		}
 
-		for ( let change of changeList ) {
+		for ( const change of changeList ) {
 			createPortletEntry( change );
 		}
-	} ).fail( function( error, errorObj ) {
-		console.log( 'Error from Gadget-rcp.js: ' + error, errorObj );
+	} ).fail( ( error, errorObj ) => {
+		mw.log( 'Error from Gadget-rcp.js: ' + error, errorObj );
 	} );
 }
 
@@ -299,9 +303,9 @@ function refreshList() {
  */
 function addOptionsButton() {
 	const $optionsButton = $( '<button>' )
-			.addClass( 'userjs-rcp-options-button' )
-			.attr( 'title', mw.msg( 'userjs-rcp-options' ) )
-			.on( 'click', optionsDialog );
+		.addClass( 'userjs-rcp-options-button' )
+		.attr( 'title', mw.msg( 'userjs-rcp-options' ) )
+		.on( 'click', optionsDialog );
 	$( '#p-unpatrolled' ).prepend( $optionsButton );
 }
 
@@ -343,7 +347,7 @@ function optionsDialog() {
 		this.fields = [];
 		const prefs = getPreferences();
 		const fieldset = new OO.ui.FieldsetLayout();
-		let newPrefs = {};
+		const newPrefs = {};
 
 		const options = [
 			{
@@ -361,10 +365,12 @@ function optionsDialog() {
 							label: mw.msg( 'userjs-rcp-options-origin-wl' )
 						} )
 					]
-				} ).selectItemByData( prefs.origin ).on( 'choose', function( item, selected ) {
-					if ( selected ) newPrefs.origin = item.getData();
+				} ).selectItemByData( prefs.origin ).on( 'choose', ( item, selected ) => {
+					if ( selected ) {
+						newPrefs.origin = item.getData();
+					}
 				} ),
-				label: 'userjs-rcp-options-origin'
+				label: mw.msg( 'userjs-rcp-options-origin' )
 			},
 			{
 				pref: 'namespace',
@@ -384,10 +390,12 @@ function optionsDialog() {
 							label: mw.msg( 'userjs-rcp-options-namespace-noncontent' )
 						} )
 					]
-				} ).selectItemByData( prefs.namespace ).on( 'choose', function( item, selected ) {
-					if ( selected ) newPrefs.namespace = item.getData();
+				} ).selectItemByData( prefs.namespace ).on( 'choose', ( item, selected ) => {
+					if ( selected ) {
+						newPrefs.namespace = item.getData();
+					}
 				} ),
-				label: 'userjs-rcp-options-namespace'
+				label: mw.msg( 'userjs-rcp-options-namespace' )
 			},
 			{
 				pref: 'direction',
@@ -402,19 +410,23 @@ function optionsDialog() {
 							label: mw.msg( 'userjs-rcp-options-direction-oldest' )
 						} )
 					]
-				} ).selectItemByData( prefs.direction ).on( 'choose', function( item, selected ) {
-					if ( selected ) newPrefs.direction = item.getData();
+				} ).selectItemByData( prefs.direction ).on( 'choose', ( item, selected ) => {
+					if ( selected ) {
+						newPrefs.direction = item.getData();
+					}
 				} ),
-				label: 'userjs-rcp-options-direction'
+				label: mw.msg( 'userjs-rcp-options-direction' )
 			},
 			{
 				pref: 'newOnly',
 				widget: new OO.ui.CheckboxInputWidget( {
 					selected: prefs.newOnly
-				} ).on( 'change', function( selected, indeterminate ) {
-					if ( selected ) newPrefs.newOnly = true;
+				} ).on( 'change', ( selected, indeterminate ) => { // eslint-disable-line no-unused-vars
+					if ( selected ) {
+						newPrefs.newOnly = true;
+					}
 				} ),
-				label: 'userjs-rcp-options-newonly',
+				label: mw.msg( 'userjs-rcp-options-newonly' ),
 				align: 'inline'
 			},
 			{
@@ -424,10 +436,12 @@ function optionsDialog() {
 					max: 20,
 					step: 1,
 					value: prefs.quantity
-				} ).on( 'change', function( value ) {
-					if ( value >= 1 && value <= 20 ) newPrefs.quantity = value;
+				} ).on( 'change', ( value ) => {
+					if ( value >= 1 && value <= 20 ) {
+						newPrefs.quantity = value;
+					}
 				} ),
-				label: 'userjs-rcp-options-quantity'
+				label: mw.msg( 'userjs-rcp-options-quantity' )
 			},
 			{
 				pref: 'frequency',
@@ -436,19 +450,21 @@ function optionsDialog() {
 					max: 600,
 					buttonStep: 10,
 					value: prefs.frequency
-				} ).on( 'change', function( value ) {
-					if ( value >= 30 && value <= 600 ) newPrefs.frequency = value;
+				} ).on( 'change', ( value ) => {
+					if ( value >= 30 && value <= 600 ) {
+						newPrefs.frequency = value;
+					}
 				} ),
-				label: 'userjs-rcp-options-frequency',
-				help: 'userjs-rcp-options-frequency-between'
+				label: mw.msg( 'userjs-rcp-options-frequency' ),
+				help: mw.msg( 'userjs-rcp-options-frequency-between' )
 			}
 		];
 
 		for ( const option of options ) {
 			const field = new OO.ui.FieldLayout( option.widget, {
-				label: mw.msg( option.label ),
+				label: option.label,
 				align: option.align ? option.align : 'top',
-				help: option.help ? mw.msg( option.help ) : '',
+				help: option.help ? option.help : '',
 				helpInline: true
 			} );
 			this.fields.push( option );
@@ -456,22 +472,27 @@ function optionsDialog() {
 		}
 
 		this.newPrefs = newPrefs;
-		this.content = new OO.ui.PanelLayout( { padded: true, expanded: false, $content: fieldset.$element } );
+		this.content = new OO.ui.PanelLayout( {
+			padded: true,
+			expanded: false,
+			$content: fieldset.$element }
+		);
 		this.$body.append( this.content.$element );
 	};
 
 	EditRcpDialog.prototype.getActionProcess = function( action ) {
-		const dialog = this;
 		if ( action === 'save' || action === 'reset' ) {
-			dialog.pushPending();
-			let newoptions = getPreferences( dialog.newPrefs );
+			this.pushPending();
+			let newoptions = getPreferences( this.newPrefs );
 
-			if ( action === 'reset' ) newoptions = {};
+			if ( action === 'reset' ) {
+				newoptions = {};
+			}
 
-			setPreferences( newoptions ).then( function() {
-				dialog.close();
+			setPreferences( newoptions ).then( () => {
+				this.close();
 				refreshList();
-			} ).fail( function() {
+			} ).fail( () => {
 				mw.notify( mw.msg( 'userjs-rcp-error' ), { type: 'error' } );
 			} );
 		}
@@ -486,7 +507,7 @@ function optionsDialog() {
 	windowManager.openWindow( dialog );
 }
 
-const portlet = mw.util.addPortlet(
+mw.util.addPortlet(
 	'p-unpatrolled',
 	mw.msg( 'userjs-rcp-portlet-title' ),
 	'#p-navigation'
@@ -496,8 +517,10 @@ addOptionsButton();
 populateList( true );
 intervalId = setInterval( populateList, getPreferences().frequency * 1000 );
 
-window.addEventListener( 'visibilitychange', ( event ) => {
-	if ( document.hidden ) return;
+window.addEventListener( 'visibilitychange', () => {
+	if ( document.hidden ) {
+		return;
+	}
 
 	if ( Date.now() - lastCheckedTime > getPreferences().frequency * 1000 ) {
 		refreshList();

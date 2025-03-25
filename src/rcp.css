@@ -27,7 +27,7 @@ body.skin-vector .userjs-rcp-item a:hover .userjs-rcp-item-title {
   font-size: smaller;
 }
 .userjs-rcp-item-title::after {
-  content: "\00a0(" attr(data-rcp-diffsize) ")";
+  content: '\00a0(' attr(data-rcp-diffsize) ')';
   color: var(--color-disabled, #a2a9b1);
 }
 .userjs-rcp-diff-large .userjs-rcp-item-title::after {
@@ -58,7 +58,7 @@ body.skin-vector .userjs-rcp-item a:hover .userjs-rcp-item-title {
   border-radius: var(--border-radius-base, 2px);
 }
 .userjs-rcp-options-button {
-  background: transparent url('/w/extensions/UniversalLanguageSelector/resources/images/cog-sprite.svg') no-repeat center top;
+  background: transparent url(/w/extensions/UniversalLanguageSelector/resources/images/cog-sprite.svg ) no-repeat center top;
   border: 0;
   min-height: 16px;
   min-width: 16px;
